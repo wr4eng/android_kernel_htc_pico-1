@@ -1136,6 +1136,11 @@ void do_timer(unsigned long ticks)
 {
 	jiffies_64 += ticks;
 	update_wall_time();
+<<<<<<< HEAD
+=======
+	sched_clock_clksrc_update();
+	prepare_calc_load();
+>>>>>>> 2d1e87a... sched/nohz: Rewrite, fix and add more accurate load-avg computation
 	calc_global_load(ticks);
 }
 
