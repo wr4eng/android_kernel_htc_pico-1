@@ -18,6 +18,14 @@
 #include <linux/backing-dev.h>
 #include "internal.h"
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DYNAMIC_FSYNC
+extern bool early_suspend_active;
+extern bool dyn_fsync_active;
+#endif
+
+>>>>>>> d2640af... fs/dyn_fsync: check dyn fsync control's active prior to performing fsync ops
 #define VALID_FLAGS (SYNC_FILE_RANGE_WAIT_BEFORE|SYNC_FILE_RANGE_WRITE| \
 			SYNC_FILE_RANGE_WAIT_AFTER)
 
@@ -174,6 +182,15 @@ SYSCALL_DEFINE1(syncfs, int, fd)
  */
 int vfs_fsync_range(struct file *file, loff_t start, loff_t end, int datasync)
 {
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DYNAMIC_FSYNC
+	if (dyn_fsync_active && !early_suspend_active)
+		return 0;
+	else {
+#endif
+
+>>>>>>> d2640af... fs/dyn_fsync: check dyn fsync control's active prior to performing fsync ops
 	struct address_space *mapping = file->f_mapping;
 	int err, ret;
 
@@ -242,8 +259,13 @@ static int do_fsync(unsigned int fd, int datasync)
 
 SYSCALL_DEFINE1(fsync, unsigned int, fd)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_FSYNC_CONTROL
 	if (!fsynccontrol_fsync_enabled())
+=======
+#ifdef CONFIG_DYNAMIC_FSYNC
+	if (dyn_fsync_active && !early_suspend_active)
+>>>>>>> d2640af... fs/dyn_fsync: check dyn fsync control's active prior to performing fsync ops
 		return 0;
 #endif
 
@@ -252,8 +274,13 @@ SYSCALL_DEFINE1(fsync, unsigned int, fd)
 
 SYSCALL_DEFINE1(fdatasync, unsigned int, fd)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_FSYNC_CONTROL
 	if (!fsynccontrol_fsync_enabled())
+=======
+#ifdef CONFIG_DYNAMIC_FSYNC
+	if (dyn_fsync_active && !early_suspend_active)
+>>>>>>> d2640af... fs/dyn_fsync: check dyn fsync control's active prior to performing fsync ops
 		return 0;
 #endif
 
@@ -332,6 +359,15 @@ EXPORT_SYMBOL(generic_write_sync);
 SYSCALL_DEFINE(sync_file_range)(int fd, loff_t offset, loff_t nbytes,
 				unsigned int flags)
 {
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DYNAMIC_FSYNC
+	if (dyn_fsync_active && !early_suspend_active)
+		return 0;
+	else {
+#endif
+
+>>>>>>> d2640af... fs/dyn_fsync: check dyn fsync control's active prior to performing fsync ops
 	int ret;
 	struct file *file;
 	struct address_space *mapping;
@@ -431,6 +467,14 @@ SYSCALL_ALIAS(sys_sync_file_range, SyS_sync_file_range);
 SYSCALL_DEFINE(sync_file_range2)(int fd, unsigned int flags,
 				 loff_t offset, loff_t nbytes)
 {
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DYNAMIC_FSYNC
+	if (dyn_fsync_active && !early_suspend_active)
+		return 0;
+	else
+#endif
+>>>>>>> d2640af... fs/dyn_fsync: check dyn fsync control's active prior to performing fsync ops
 	return sys_sync_file_range(fd, offset, nbytes, flags);
 }
 #ifdef CONFIG_HAVE_SYSCALL_WRAPPERS
