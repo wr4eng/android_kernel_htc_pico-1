@@ -185,7 +185,7 @@ int vfs_fsync_range(struct file *file, loff_t start, loff_t end, int datasync)
 <<<<<<< HEAD
 =======
 #ifdef CONFIG_DYNAMIC_FSYNC
-	if (dyn_fsync_active && !early_suspend_active)
+	if (likely(dyn_fsync_active && !early_suspend_active))
 		return 0;
 	else {
 #endif
@@ -264,8 +264,12 @@ SYSCALL_DEFINE1(fsync, unsigned int, fd)
 	if (!fsynccontrol_fsync_enabled())
 =======
 #ifdef CONFIG_DYNAMIC_FSYNC
+<<<<<<< HEAD
 	if (dyn_fsync_active && !early_suspend_active)
 >>>>>>> d2640af... fs/dyn_fsync: check dyn fsync control's active prior to performing fsync ops
+=======
+	if (likely(dyn_fsync_active && !early_suspend_active))
+>>>>>>> 6197072... dynamic fsync: favor true case since most will be using this feature
 		return 0;
 #endif
 
@@ -279,8 +283,12 @@ SYSCALL_DEFINE1(fdatasync, unsigned int, fd)
 	if (!fsynccontrol_fsync_enabled())
 =======
 #ifdef CONFIG_DYNAMIC_FSYNC
+<<<<<<< HEAD
 	if (dyn_fsync_active && !early_suspend_active)
 >>>>>>> d2640af... fs/dyn_fsync: check dyn fsync control's active prior to performing fsync ops
+=======
+	if (likely(dyn_fsync_active && !early_suspend_active))
+>>>>>>> 6197072... dynamic fsync: favor true case since most will be using this feature
 		return 0;
 #endif
 
@@ -362,7 +370,7 @@ SYSCALL_DEFINE(sync_file_range)(int fd, loff_t offset, loff_t nbytes,
 <<<<<<< HEAD
 =======
 #ifdef CONFIG_DYNAMIC_FSYNC
-	if (dyn_fsync_active && !early_suspend_active)
+	if (likely(dyn_fsync_active && !early_suspend_active))
 		return 0;
 	else {
 #endif
@@ -470,7 +478,7 @@ SYSCALL_DEFINE(sync_file_range2)(int fd, unsigned int flags,
 <<<<<<< HEAD
 =======
 #ifdef CONFIG_DYNAMIC_FSYNC
-	if (dyn_fsync_active && !early_suspend_active)
+	if (likely(dyn_fsync_active && !early_suspend_active))
 		return 0;
 	else
 #endif
