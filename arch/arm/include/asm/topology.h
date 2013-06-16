@@ -1,8 +1,6 @@
 #ifndef _ASM_ARM_TOPOLOGY_H
 #define _ASM_ARM_TOPOLOGY_H
 
-#ifdef CONFIG_ARM_CPU_TOPOLOGY
-
 #include <linux/cpumask.h>
 
 struct cputopo_arm {
@@ -31,17 +29,6 @@ const struct cpumask *cpu_coregroup_mask(int cpu);
 void set_power_scale(unsigned int cpu, unsigned int power);
 int topology_register_notifier(struct notifier_block *nb);
 int topology_unregister_notifier(struct notifier_block *nb);
-
-#else
-
-static inline void init_cpu_topology(void) { }
-static inline void store_cpu_topology(unsigned int cpuid) { }
-
-static inline void set_power_scale(unsigned int cpu, unsigned int power) { }
-static inline int topology_register_notifier(struct notifier_block *nb)  { }
-static inline int topology_unregister_notifier(struct notifier_block *nb)  { }
-
-#endif
 
 /* Topology notifier event */
 #define TOPOLOGY_POSTCHANGE 0
